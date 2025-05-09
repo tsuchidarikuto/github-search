@@ -104,6 +104,9 @@ def save_to_csv(users: List[Dict[str, Any]], query: str):
     filename = f"github_users_{timestamp}.csv"
     filepath = os.path.join(output_dir, filename)
     
+    # 空でないユーザーのみをフィルタリング
+    valid_users = [user for user in users if user and user.get('login')]
+    
     # Convert data to DataFrame
     df = pd.DataFrame([
         {
@@ -111,9 +114,9 @@ def save_to_csv(users: List[Dict[str, Any]], query: str):
             'Display Name': user.get('name', ''),
             'Bio': user.get('bio', ''),
             'Location': user.get('location', ''),
-            'Followers': user.get('followers', {}).get('totalCount', 0) if user.get('followers') else 0
+            'Followers': user.get('followers', {}).get('totalCount', 0) 
         }
-        for user in users
+        for user in valid_users
     ])
     
     # Save to CSV
@@ -140,6 +143,12 @@ def main():
     try:
         users = searcher.search_users(SEARCH_QUERY, first=MAX_RESULTS)
         
+        print("\n=== Debug: API Response Data ===")
+        print(f"Number of users found: {len(users) if users else 0}")
+        if users:
+            print("First user data sample:")
+            print(json.dumps(users[0], indent=2))
+        
         if not users:
             print("\nNo users found matching the search criteria.")
             return
@@ -164,6 +173,9 @@ def main():
             
     except Exception as e:
         print(f"Error occurred: {str(e)}")
+        print("\nFull error details:")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main() 

@@ -6,9 +6,6 @@ WORKDIR /app
 COPY config/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# アプリケーションのコードをコピー
-COPY src/ ./src/
-COPY config/ ./config/
 
 # 出力ディレクトリの作成
 RUN mkdir -p /app/output
@@ -16,8 +13,7 @@ RUN mkdir -p /app/output
 # 環境変数の設定
 ENV PYTHONUNBUFFERED=1
 
-# ボリュームの設定
-VOLUME ["/app/output"]
+
 
 # 実行コマンド
 CMD ["python", "src/simple_github_search.py"] 
