@@ -19,8 +19,8 @@ GitHubユーザーを検索し、結果をCSVファイルとして保存するPy
 
 1. リポジトリをクローン：
 ```bash
-git clone https://github.com/yourusername/github-user-search.git
-cd github-user-search
+git clone https://github.com/tsuchidarikuto/github-search.git
+cd github-search
 ```
 
 2. GitHub Personal Access Tokenの取得：
