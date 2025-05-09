@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  github-search:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./output:/app/output
+    
